@@ -2,7 +2,7 @@
   "name": "Luna",
   "version": "1.0.0",
   "description": "## An arcade-style game inspired by Atari's 1979 classic, Lunar Lander.",
-  "main": "game.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --mode=development --watch"
