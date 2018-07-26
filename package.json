@@ -1,0 +1,27 @@
+{
+  "name": "Luna",
+  "version": "1.0.0",
+  "description": "## An arcade-style game inspired by Atari's 1979 classic, Lunar Lander.",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --mode=development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BR1K/Luna.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BR1K/Luna/issues"
+  },
+  "homepage": "https://github.com/BR1K/Luna#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.16.2"
+  }
+}
