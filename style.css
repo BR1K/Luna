@@ -12,14 +12,27 @@ body {
   margin-bottom: 20px;
 }
 
+#game {
+  position: absolute;
+  z-index: 2;
+}
+
+#background {
+  /* position: absolute; */
+  background: transparent;
+  z-index: 1;
+
+}
+
 .game-page {
-  display: flex;
+  display: `flex`;
   width: 100%;
   display: block;
   /* height: 100%; */
 }
 
 .game-container {
+  display: flex;
   /* width: 1050px; */
   /* justify-content: space-between; */
   /* display: flex; */
