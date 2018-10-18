@@ -1,15 +1,16 @@
-body {
+/* body {
   color: gainsboro;
   height: 100vh;
-  /* justify-content: center; */
+
   background-image: url(https://res.cloudinary.com/fullstackimages/image/upload/v1539551925/Luna/luna_background2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
 }
 
 
 .canvas {
-  /* background-color: black; */
   display: block;
   border: 1px solid black;
   margin-left: 20px;
@@ -19,18 +20,20 @@ body {
 #game {
   position: absolute;
   z-index: 3;
+  border: 1px solid white;
 }
 
 #background {
   position: absolute;
   background: transparent;
   z-index: 1;
+  width: 100vw;
+  height: 100vh;
 
 }
 #background2 {
-  /* position: absolute; */
   background: transparent;
-  z-index: 2;
+  z-index: 1;
 
 }
 
@@ -38,28 +41,25 @@ body {
   display: `flex`;
   width: 100%;
   display: block;
-  /* height: 100%; */
+
 }
 
 .game-container {
   display: flex;
-  /* width: 1050px; */
-  /* justify-content: space-between; */
-  /* display: flex; */
+
 }
 
 .title {
   margin-top: 10px;
   font-size: 70px;
-  /* font-family: 'Monoton', cursive; */
+
   margin-bottom: 20px;
   text-align: center;
+
 }
 
 .info-container {
-  /* border: 1px solid black; */
-  /* width: 100px; */
-  /* margin-bottom: 20px; */
+
 }
 
 .x {
@@ -86,4 +86,43 @@ ol, ul {
 
 #angellist-link {
   margin-left: 7px;
+} */
+
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: gainsboro;
+}
+
+#background {
+  position: absolute;
+  z-index: -1000;
+}
+
+.x {
+  display: flex;
+  justify-content: center;
+}
+
+#game {
+  border: 1px solid gainsboro;
+}
+
+.title {
+  padding-top: 1.5%;
+  font-size: calc(1em + 1vw);
+
+  padding-bottom: 1%;
+  text-align: center;
+
+}
+
+ol, ul {
+ list-style: none;
+}
+
+.made-by {
+  text-align: center;
 }
