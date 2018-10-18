@@ -96,11 +96,10 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _spaceship__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./spaceship */ "./lib/spaceship.js");
-/* harmony import */ var _terrain2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./terrain2 */ "./lib/terrain2.js");
-/* harmony import */ var _sky__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sky */ "./lib/sky.js");
+/* harmony import */ var _sky__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sky */ "./lib/sky.js");
 
 // import Terrain from './terrain';
-
+// import Terrain from './terrain2';
 
 
 class Game {
@@ -108,15 +107,15 @@ class Game {
   constructor(ctx, canvas, ctx2, canvas2, ctx3, canvas3) {
 
     this.ctx = ctx;
-    this.terrain = new _terrain2__WEBPACK_IMPORTED_MODULE_1__["default"](ctx3, canvas3);
+    // this.terrain = new Terrain(ctx3, canvas3);
     this.spaceship = new _spaceship__WEBPACK_IMPORTED_MODULE_0__["default"](ctx, canvas, this.terrain);
-    this.sky = new _sky__WEBPACK_IMPORTED_MODULE_2__["default"](ctx2, canvas2);
+    this.sky = new _sky__WEBPACK_IMPORTED_MODULE_1__["default"](ctx2, canvas2);
     this.ctx2 = ctx2;
     this.canvas2 = canvas2;
     this.canvas = canvas;
     this.ctx3 = ctx3;
     this.canvas3 = canvas3;
-    this.draw3 = this.draw3.bind(this);
+    // this.draw3 = this.draw3.bind(this);
     this.draw1 = this.draw1.bind(this);
     this.draw2 = this.draw2.bind(this);
   }
@@ -127,6 +126,8 @@ class Game {
 
   draw1() {
     // console.log(this);
+    this.canvas.height = window.innerHeight / 1.5;
+    this.canvas.width = window.innerWidth / 1.8;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.save();
     this.spaceship.drawSpaceship();
@@ -151,13 +152,13 @@ class Game {
   }
 
 
-  draw3() {
-    this.ctx3.clearRect(0, 0, this.ctx3.width, this.ctx3.height);
-    this.terrain.drawTerrain();
-    // this.terrain.drawFloor();
-
-    requestAnimationFrame(this.draw3);
-  }
+  // draw3() {
+  //   this.ctx3.clearRect(0, 0, this.ctx3.width, this.ctx3.height);
+  //   this.terrain.drawTerrain();
+  //   // this.terrain.drawFloor();
+  //
+  //   requestAnimationFrame(this.draw3);
+  // }
 
 }
 
@@ -195,10 +196,9 @@ class Game {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _game_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game.js */ "./lib/game.js");
-/* harmony import */ var _terrain2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./terrain2 */ "./lib/terrain2.js");
 
 // import Spaceship from './spaceship';
-
+// import Terrain from './terrain2';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -209,18 +209,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvas2 = document.getElementById("background");
   const ctx2 = canvas2.getContext('2d');
 
-  const canvas3 = document.getElementById("background2");
-  const ctx3 = canvas3.getContext('2d');
+  // const canvas3 = document.getElementById("background2");
+  // const ctx3 = canvas3.getContext('2d');
 
-  const terrain = new _terrain2__WEBPACK_IMPORTED_MODULE_1__["default"](ctx3, canvas3);
+  // const terrain = new Terrain(ctx3, canvas3);
 
-  const game = new _game_js__WEBPACK_IMPORTED_MODULE_0__["default"](ctx, canvas, ctx2, canvas2, ctx3, canvas3);
+  const game = new _game_js__WEBPACK_IMPORTED_MODULE_0__["default"](ctx, canvas, ctx2, canvas2);
 
   document.addEventListener('keydown', e => game.spaceship.keyPressed(e));
   document.addEventListener('keyup', e => game.spaceship.keyUnPressed(e));
   // game.drawTerrain();
-  terrain.drawTerrain();
-  game.draw3();
+  // terrain.drawTerrain();
+  // game.draw3();
   game.draw1();
   game.draw2();
 });
@@ -241,7 +241,6 @@ class Sky {
   constructor(ctx, canvas) {
     this.ctx = ctx;
     this.color = "#000";
-    // this.color = "rgba(0, 0, 0, 0)"
     this.canvas = canvas;
     this.stars = [];
     this.numStars = 500;
@@ -254,6 +253,8 @@ class Sky {
     for(let i = 0; i < this.numStars; i++) {
       this.stars[i] = this.makeStar();
     }
+    // this.canvas.height = window.innerHeight;
+    // this.canvas.width = window.innerWidth;
   }
 
   makeStar() {
@@ -293,7 +294,10 @@ class Sky {
   }
 
   drawSky() {
+    this.canvas.height = window.innerHeight;
+    this.canvas.width = window.innerWidth;
     this.ctx.fillStyle = this.color;
+
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.drawStars();
@@ -320,7 +324,7 @@ __webpack_require__.r(__webpack_exports__);
 class Spaceship {
   constructor(ctx, canvas, terrain) {
 
-    this.terrain = terrain;
+    // this.terrain = terrain;
     this.friction = 0.5
     this.canvas = canvas;
     this.ctx = ctx;
@@ -358,7 +362,7 @@ class Spaceship {
     this.getBotMid = this.getBotMid.bind(this);
     this.getCorners = this.getCorners.bind(this);
     this.getLowestPoint = this.getLowestPoint.bind(this);
-    this.checkCollision = this.checkCollision.bind(this);
+    // this.checkCollision = this.checkCollision.bind(this);
   }
 
   drawSpaceship() {
@@ -388,28 +392,24 @@ class Spaceship {
 
   // arr[x] == ship.pos.y
 
-  checkCollision() {
-    debugger
-    let width = this.canvas.width;
-    let height = this.canvas.height;
-    let displace = height / 6;
-    let detail = 0.6;
-    let seed = {
-      s: height / 2 + (Math.random() * displace * 2) - displace,
-      e: height / 2 + (Math.random() * displace * 2) - displace
-    }
-    // debugger
-    let points = this.terrain.terrain;
-    if (this.terrain.terrain2.length - 1 + this.terrain.width + this.terrain.offset <= this.terrain.width) {
-      points = this.terrain.terrain2;
-    }
-    // debugger
-    let lowestPoint = this.getLowestPoint();
-    let i = Math.floor(lowestPoint.x);
-    if (lowestPoint.y >= points[i]) {
-      console.log("omg");
-    }
-  }
+  // checkCollision() {
+  //   let width = this.canvas.width;
+  //   let height = this.canvas.height;
+  //   let displace = height / 6;
+  //   let detail = 0.6;
+  //   let seed = {
+  //     s: height / 2 + (Math.random() * displace * 2) - displace,
+  //     e: height / 2 + (Math.random() * displace * 2) - displace
+  //   }
+  //   let points = this.terrain.terrain;
+  //   if (this.terrain.terrain2.length - 1 + this.terrain.width + this.terrain.offset <= this.terrain.width) {
+  //     points = this.terrain.terrain2;
+  //   }
+  //   let lowestPoint = this.getLowestPoint();
+  //   let i = Math.floor(lowestPoint.x);
+  //   if (lowestPoint.y >= points[i]) {
+  //   }
+  // }
 
 
   updateSpaceship() {
@@ -420,7 +420,7 @@ class Spaceship {
     // }
     // debugger
     this.getCorners();
-    this.checkCollision();
+    // this.checkCollision();
 
     this.position.x += this.velocity.x;
     this.position.y -= this.velocity.y;
@@ -545,167 +545,6 @@ class Spaceship {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Spaceship);
-
-
-/***/ }),
-
-/***/ "./lib/terrain2.js":
-/*!*************************!*\
-  !*** ./lib/terrain2.js ***!
-  \*************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-class Terrain {
-
-  constructor(ctx, canvas) {
-    this.ctx = ctx;
-    this.canvas = canvas;
-    this.width = this.canvas.width;
-    this.height = this.canvas.height + 200;
-
-    this.getTerrain = this.getTerrain.bind(this);
-    this.drawTerrain = this.drawTerrain.bind(this);
-    this.terrain = this.getTerrain(this.width, this.height, (this.height / 4), 0.6);
-    this.terrain2 = this.getTerrain(this.width, this.height, (this.height / 4), 0.6, { s: this.terrain[this.terrain.length - 1], e: 0 });
-    this.offset = 0;
-  }
-
-  // dislpace: change distance a point can go
-
-  // NOTE: without seed: ////////////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // getTerrain(width, height, displace, detail) {
-  //   let points = [];
-  //   let power = Math.pow(2, Math.ceil(Math.log(width) / (Math.log(2))))
-  //
-  //   points[0] = height / 1.43 + (Math.random() * displace * 2) - displace;
-  //   points[power] = height / 1.43 + (Math.random() * displace * 2) - displace;
-  //   displace *= detail;
-  //
-  //   for (let i = 1; i < power; i *= 2) {
-  //     for (let j = (power / i) / 2; j < power; j += power / i) {
-  //       points[j] = ((points[j - (power / i) / 2] + points[j + (power / i) / 2]) / 2);
-  //       points[j] += (Math.random() * displace * 2) - displace;
-  //     }
-  //
-  //     displace *= detail;
-  //   }
-  //   // console.log(points);
-  //   // debugger
-  //   return points;
-  // }
-  //
-  // drawTerrain() {
-  //   // debugger
-  //   let terrain = this.getTerrain(this.width, this.height, (this.height / 4), 0.6);
-  //
-  //   this.ctx.beginPath();
-  //   this.ctx.moveTo(0, terrain[0]);
-  //   for (let i = 1; i < terrain.length; i++) {
-  //     this.ctx.lineTo(i, terrain[i]);
-  //   }
-  //   this.ctx.lineTo(this.width, this.height);
-  //   this.ctx.lineTo(0, this.height);
-  //   this.ctx.closePath();
-  //   this.ctx.fillStyle = "grey";
-  //   this.ctx.fill();
-  // }
-
-  // drawFloor() {
-  //   this.ctx.beginPath();
-  //   this.ctx.moveTo(0, 500);
-  //   this.ctx.lineTo(this.canvas.width, 500);
-  //   this.ctx.stroke();
-  //   this.ctx.strokeStyle = "white";
-  //   this.ctx.closePath();
-  // }
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // NOTE: with seed:
-
-  getTerrain(width, height, displace, detail, seed) {
-    let points = [];
-    let power = Math.pow(2, Math.ceil(Math.log(width) / (Math.log(2))))
-    // let seed = seed || {
-    //   s: height / 2 + (Math.random() * displace * 2) - displace,
-    //   e: height / 2 + (Math.random() * displace * 2) - displace
-    // };
-    if (!seed) {
-      seed = {
-        s: height / 2 + (Math.random() * displace * 2) - displace,
-        e: height / 2 + (Math.random() * displace * 2) - displace
-      };
-    }
-
-    // set start point:
-    if (seed.s === 0) {
-      seed.s = height / 2 + (Math.random() * displace * 2) - displace;
-    }
-    points[0] = seed.s;
-
-    // set end point:
-    if (seed.e === 0) {
-      seed.e = height / 2 + (Math.random() * displace * 2) - displace
-    }
-    points[power] = seed.e;
-
-    displace *= detail;
-
-    for (let i = 1; i < power; i *= 2) {
-      for (let j = (power / i) / 2; j < power; j += power / i) {
-        points[j] = ((points[j - (power / i) / 2] + points[j + (power / i) / 2]) / 2);
-        points[j] += (Math.random() * displace * 2) - displace;
-      }
-
-      displace *= detail;
-    }
-    // console.log(points);
-    debugger
-    return points;
-  }
-
-  getPointsArr() {
-
-  }
-
-  drawTerrain() {
-    // debugger
-
-    this.ctx.clearRect(0, 0, this.width, this.height);
-    this.offset -= 3;
-
-    // draw first half:
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.offset, this.terrain[0]);
-    for (var t = 0; t < this.terrain.length; t++) {
-      this.ctx.lineTo(t + this.offset, this.terrain[t]);
-    }
-    for (t = 1; t < this.terrain2.length; t++) {
-      this.ctx.lineTo(this.width + this.offset + t, this.terrain2[t])
-    }
-
-    this.ctx.lineTo(this.width + this.offset + t, this.height);
-    this.ctx.lineTo(this.offset, this.height);
-    this.ctx.closePath();
-    this.ctx.fillStyle = "grey";
-    this.ctx.fill();
-
-    if (this.terrain2.length - 1 + this.width + this.offset <= this.width) {
-      debugger
-      this.terrain = this.terrain2;
-      this.terrain2 = this.getTerrain(this.width, this.height, (this.height / 4), 0.6, { s: this.terrain[this.terrain.length - 1], e: 0 });
-      this.offset = 0;
-    }
-    // requestAnimationFrame(this.drawTerrain);
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Terrain);
 
 
 /***/ })
